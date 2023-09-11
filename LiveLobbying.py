@@ -32,7 +32,7 @@ class LiveLobbying:
 
     def save_csv_response(self, response_json, filename):
         if isinstance(response_json, list) and len(response_json) > 0:
-            with open(filename, "w", newline="", encoding="utf-8") as csv_file:  # Specify encoding here
+            with open(filename, "w", newline="", encoding="utf-8") as csv_file:  
                 csv_writer = csv.writer(csv_file)
                 header = response_json[0].keys()
                 csv_writer.writerow(header)
@@ -58,15 +58,15 @@ class LiveLobbying:
             print("Empty response from the API.")
         return None
 
-    def process_data(self, endpoint, data_directory):
+    def process_data(self, endpoint, data_directory, file_prefix):
         response_json = self.fetch_data(endpoint)
 
         if response_json is not None:
             os.makedirs(data_directory, exist_ok=True)
 
-            json_filename = os.path.join(data_directory, "live_lobbying.json")
-            csv_filename = os.path.join(data_directory, "live_lobbying.csv")
-            tickers_filename = os.path.join(data_directory, "live_lobbying__unique_tickers.txt")
+            json_filename = os.path.join(data_directory, file_prefix+".json")
+            csv_filename = os.path.join(data_directory, file_prefix+".csv")
+            tickers_filename = os.path.join(data_directory, file_prefix+"__unique_tickers.txt")
             
 
             self.save_json_response(response_json, json_filename)
@@ -85,8 +85,9 @@ class LiveLobbying:
 # Example usage:
 if __name__ == "__main__":
     token_file_path = "token.txt"
-    live_lobbying_endpoint = "/beta/live/lobbying"
+
+    live_lobbying_endpoint = ["/beta/live/lobbying", "live_lobbying"]    
     data_directory = "data"
 
     live_lobbying = LiveLobbying(token_file_path)
-    live_lobbying.process_data(live_lobbying_endpoint, data_directory)
+    live_lobbying.process_data(live_lobbying_endpoint[0], data_directory, live_lobbying_endpoint[1])
