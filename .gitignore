@@ -1,0 +1,8 @@
+#secret key
+token.txt
+
+#data
+data/
+
+#build 
+.vscode/
