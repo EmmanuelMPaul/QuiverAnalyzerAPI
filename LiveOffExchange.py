@@ -32,7 +32,7 @@ class LiveOffExchange:
 
     def save_csv_response(self, response_json, filename):
         if isinstance(response_json, list) and len(response_json) > 0:
-            with open(filename, "w", newline="") as csv_file:
+            with open(filename, "w", newline="", encoding="utf-8") as csv_file: 
                 csv_writer = csv.writer(csv_file)
                 header = response_json[0].keys()
                 csv_writer.writerow(header)

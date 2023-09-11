@@ -3,6 +3,7 @@ import json
 import csv
 import os
 
+
 class BulkCongressTrading:
     def __init__(self, token_file_path):
         self.token_file_path = token_file_path
@@ -18,6 +19,7 @@ class BulkCongressTrading:
                 return "Bearer " + token_file.read().strip()
         except FileNotFoundError:
             raise Exception("Token file not found.")
+
     def make_request(self, endpoint):
         conn = http.client.HTTPSConnection(self.base_url)
         conn.request("GET", endpoint, headers=self.headers)
@@ -25,14 +27,13 @@ class BulkCongressTrading:
         data = res.read()
         return data
 
-
     def save_json_response(self, response_json, filename):
         with open(filename, "w") as json_file:
             json.dump(response_json, json_file, indent=4)
 
     def save_csv_response(self, response_json, filename):
         if isinstance(response_json, list) and len(response_json) > 0:
-            with open(filename, "w", newline="") as csv_file:
+            with open(filename, "w", newline="", encoding="utf-8") as csv_file:
                 csv_writer = csv.writer(csv_file)
                 header = response_json[0].keys()
                 csv_writer.writerow(header)
@@ -63,9 +64,12 @@ class BulkCongressTrading:
         if response_json is not None:
             os.makedirs(data_directory, exist_ok=True)
 
-            json_filename = os.path.join(data_directory, "bulk_congresstrading.json")
-            csv_filename = os.path.join(data_directory, "bulk_congresstrading.csv")
-            tickers_filename = os.path.join(data_directory, "bulk_congresstrading_unique_tickers.txt")
+            json_filename = os.path.join(
+                data_directory, "bulk_congresstrading.json")
+            csv_filename = os.path.join(
+                data_directory, "bulk_congresstrading.csv")
+            tickers_filename = os.path.join(
+                data_directory, "bulk_congresstrading_unique_tickers.txt")
 
             self.save_json_response(response_json, json_filename)
             self.save_csv_response(response_json, csv_filename)

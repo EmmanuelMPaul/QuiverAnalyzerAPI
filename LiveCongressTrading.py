@@ -3,6 +3,7 @@ import json
 import csv
 import os
 
+
 class LiveCongressTrading:
     def __init__(self, token_file_path):
         self.token_file_path = token_file_path
@@ -32,7 +33,7 @@ class LiveCongressTrading:
 
     def save_csv_response(self, response_json, filename):
         if isinstance(response_json, list) and len(response_json) > 0:
-            with open(filename, "w", newline="") as csv_file:
+            with open(filename, "w", newline="", encoding="utf-8") as csv_file:
                 csv_writer = csv.writer(csv_file)
                 header = response_json[0].keys()
                 csv_writer.writerow(header)
@@ -63,9 +64,12 @@ class LiveCongressTrading:
         if response_json is not None:
             os.makedirs(data_directory, exist_ok=True)
 
-            json_filename = os.path.join(data_directory, "live_congresstrading.json")
-            csv_filename = os.path.join(data_directory, "live_congresstrading.csv")
-            tickers_filename = os.path.join(data_directory, "live_congresstrading_unique_tickers.txt")
+            json_filename = os.path.join(
+                data_directory, "live_congresstrading.json")
+            csv_filename = os.path.join(
+                data_directory, "live_congresstrading.csv")
+            tickers_filename = os.path.join(
+                data_directory, "live_congresstrading_unique_tickers.txt")
 
             self.save_json_response(response_json, json_filename)
             self.save_csv_response(response_json, csv_filename)
@@ -86,5 +90,5 @@ if __name__ == "__main__":
     data_directory = "data"
 
     live_congress_trading = LiveCongressTrading(token_file_path)
-    live_congress_trading.process_data(live_congresstrading_endpoint, data_directory)
-
+    live_congress_trading.process_data(
+        live_congresstrading_endpoint, data_directory)

@@ -3,6 +3,7 @@ import json
 import csv
 import os
 
+
 class RecentSenateTrading:
     def __init__(self, token_file_path):
         self.token_file_path = token_file_path
@@ -32,7 +33,7 @@ class RecentSenateTrading:
 
     def save_csv_response(self, response_json, filename):
         if isinstance(response_json, list) and len(response_json) > 0:
-            with open(filename, "w", newline="") as csv_file:
+            with open(filename, "w", newline="", encoding="utf-8") as csv_file:
                 csv_writer = csv.writer(csv_file)
                 header = response_json[0].keys()
                 csv_writer.writerow(header)
@@ -57,8 +58,10 @@ class RecentSenateTrading:
         if response_json is not None:
             os.makedirs(data_directory, exist_ok=True)
 
-            json_filename = os.path.join(data_directory, "recent_senatetrading.json")
-            csv_filename = os.path.join(data_directory, "recent_senatetrading.csv")
+            json_filename = os.path.join(
+                data_directory, "recent_senatetrading.json")
+            csv_filename = os.path.join(
+                data_directory, "recent_senatetrading.csv")
 
             self.save_json_response(response_json, json_filename)
             self.save_csv_response(response_json, csv_filename)
@@ -68,6 +71,7 @@ class RecentSenateTrading:
         else:
             print("No valid JSON data to process.")
 
+
 # Example usage:
 if __name__ == "__main__":
     token_file_path = "token.txt"
@@ -75,4 +79,5 @@ if __name__ == "__main__":
     data_directory = "data"
 
     recent_senatetrading = RecentSenateTrading(token_file_path)
-    recent_senatetrading.process_data(recent_senatetrading_endpoint, data_directory)
+    recent_senatetrading.process_data(
+        recent_senatetrading_endpoint, data_directory)
