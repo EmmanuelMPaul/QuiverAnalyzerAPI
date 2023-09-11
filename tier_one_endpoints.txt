@@ -1,0 +1,8 @@
+"/beta/bulk/congresstrading","bulk_congresstrading","normalized:false"
+"/beta/live/congresstrading","live_congresstrading","normalized:false"
+"/beta/live/lobbying","live_lobbying"
+"/beta/live/offexchange","live_offexchange"
+""/beta/live/govcontracts","recent_govcontracts"
+"/beta/live/govcontractsall","recent_govcontractsall"
+"/beta/live/housetrading","recent_housetrading"
+"/beta/live/senatetrading","recent_senatetrading"
