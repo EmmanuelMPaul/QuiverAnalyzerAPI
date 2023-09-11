@@ -42,10 +42,14 @@ class TierOne:
                     csv_writer.writerow(item.values())
 
     def save_unique_tickers(self, response_json, filename):
+        # Extract unique tickers from the list of dictionaries
         unique_tickers = set(item['Ticker'] for item in response_json)
+        
+        # Write the unique tickers to the specified file
         with open(filename, "w") as tickers_file:
             for ticker in unique_tickers:
                 tickers_file.write(ticker + "\n")
+
 
     def fetch_data(self, endpoint):
         data = self.make_request(endpoint)
@@ -102,7 +106,7 @@ class TierOne:
 
             # Convert the set to a sorted list
             sorted_unique_tickers = sorted(unique_tickers)
-            
+
             # Write the unique tickers to the output file
             with open(output_file, "w") as output:
                 for ticker in sorted_unique_tickers:
@@ -155,7 +159,7 @@ if __name__ == "__main__":
         print(f"\n**************************************************************")
 
         # Add a delay of 5 seconds between requests
-        # time.sleep(5)
+        time.sleep(5)
 
     print("get all Unique tickers ")
 
